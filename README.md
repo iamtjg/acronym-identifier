@@ -1,10 +1,64 @@
 # Acronym Identifier
 
+## Description
 Frustrated by acronyms and jargon all over documentation?  Can't kick the habit of using them yourself?  This aims to find all acronyms in a text and check them against a provided set of terms.  Then updating the text with indicators that can be expanded for the meanings of an acronym.
 
-The current plan is to make this JavaScript that can be placed on any page, find all the potential acronyms, check them against a set of terms (either client side or sent to server for processing), and then visually and structurally (using `abbr` elements) indicate what are known acronyms.
+This JavaScript can be placed on any page, find all the potential acronyms, check them against a set of terms, and then insert an expandable widget that lists all acronyms and their definitions (if known) for the page.
 
-Fun Fact: Did you know that acronyms are supposed to be pronounceable?  Otherwise they are called 'initializations.'
+'Fun' Fact: Did you know that acronyms are supposed to be pronounceable?  Otherwise they are called initializations.
 
 Regex for matching an acronym:
 `(?:\b)([A-Z]{2,})(?:\b)` -> this matches any word that consists only of 2 or more capital letters.  The `\b` word boundaries are matched but not captured.
+
+## Future Plans
+Expand this to interact with a service that stores and can be used to manage known acronyms.
+
+## Use
+Format of known acronyms list is expected to be a JSON object with the acronyms as keys and definitions as values.
+```
+{
+  "CSS": "Cascading Style Sheets",
+  "HTML": "HyperText Markup Language",
+  "BLARG": "Be Loud and Argue Gregariously",
+  "NATO": "Not Another Tomato Omelet",
+  "JS": "JavaScript",
+  "WUT": "Waldo Underutilizes Tangerines"
+}
+```
+To provide multiple definitions for an acronym set the value to an array of the definitions.
+```
+{
+  "CSS": ["Cascading Style Sheets","Counting Sheets Sarcastically"],
+  "HTML": "HyperText Markup Language"
+}
+```
+
+Add `nymid.js` and `nymid.css` to your header.
+
+```
+<link href="nymid.css" rel="stylesheet" type="text/css">
+<script src="nymid.js"></script>
+```
+Call the `nymid` function with the following parameters:
+- `startingElement` - The highest level element to begin searching for acronyms at.  This defaults to `<body>` if not provided.
+- `definitionList` - JSON object of known acronyms and their definitions.
+- `widgetPosition` - which side of the screen widget should be displayed on. top, right, left, or bottom.
+
+```
+<script>
+let listLocation = 'nym-list.json';
+
+fetch(listLocation)
+.then(function(response){
+  return response.json();
+})
+.then(function(json){
+  let list = json;
+  nymid({
+    startingElement: document.querySelector('main'),
+    definitionList: list,
+    widgetPosition: 'right'
+  });
+});
+</script>
+```

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acronym Identifier</title>
+  <link href="../nymid.css" rel="stylesheet" type="text/css">
+  <script src="../nymid.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Acronym Identifier Example</h1>
+  </header>
+  <main>
+    <section>
+      <p>This page has a bunch of acronyms.</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+      <p>This page has a bunch of COTS. Can you find BLARG?</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+      <p>This page has a bunch of CSS. Can you find HTML?</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+    </section>
+    <section>
+      <p>This page is weird.</p>
+      <div>
+        <p>No it is awesome</p>
+      </div>
+    </section>
+    <section>
+      <p>This page has a bunch of acronyms.</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+      <p>This page has a bunch of NATO. Can you find it?</p>
+      <p>This page has a bunch of CATS. Can you find JS?</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+      <p>This page has a bunch of CSS. Can you find HTML?</p>
+      <p>This page has a bunch of NATO. Can you find JSON?</p>
+    </section>
+    <section>
+      <p>This page is weird.</p>
+      <div>
+        <p>No it is WUT</p>
+      </div>
+    </section>
+    <section>
+      <p>This page has a bunch of acronyms.</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+      <p>This page has a bunch of XML. Can you find BLARG?</p>
+      <p>This page has a bunch of COTS. Can you find BLARG?</p>
+      <p>This page has a bunch of NATO. Can you find HOOPS?</p>
+      <p>This page has a bunch of CSS. Can you find HTML?</p>
+      <p>This page has a bunch of NATO. Can you find BLARG?</p>
+    </section>
+    <section>
+      <p>This page is NACHO.</p>
+      <div>
+        <p>No it is awesome</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>NYMS</p>
+  </footer>
+  <script>
+  let listLocation = 'nym-list.json';
+
+  fetch(listLocation)
+  .then(function(response){
+    return response.json();
+  })
+  .then(function(json){
+    let list = json;
+    nymid({
+      startingElement: document.querySelector('main'),
+      definitionList: list,
+      widgetPosition: 'right'
+    });
+  });
+  </script>
+</body>
