@@ -5,9 +5,24 @@ const NYM_REGEX = /(?:\b)([A-Z]{2,})(?:\b)/g;
 function nymid(options) {
   let nymNodes = findNymNodes(options.startingElement);
   let uniqueNyms = uniquePageNyms(nymNodes);
-  let definedAcronyms = defineAcronyms(uniqueNyms, options.definitionList);
 
-  insertWidget(definedAcronyms, options.widgetPosition);
+  if (options.definitionProvider) {
+    fetch(options.definitionProvider, {
+      method: 'POST',
+      body: JSON.stringify({"nyms":uniqueNyms}),
+    }).then(function(response){
+      return response.json();
+    }).then(function(json){
+      insertWidget(json, options.widgetPosition);
+    }).catch(function(error){
+      insertWidget({"ERROR":"Unable to reach definition provider"}, options.widgetPosition);
+    });
+  } else if (options.definitionList) {
+    let definedAcronyms = defineAcronyms(uniqueNyms, options.definitionList);
+    insertWidget(definedAcronyms, options.widgetPosition);
+  } else {
+    insertWidget({"ERROR":"No definition provider or definition list"}, options.widgetPosition);
+  }
 }
 
 /**
