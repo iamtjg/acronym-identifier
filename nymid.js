@@ -5,7 +5,7 @@ const NYM_REGEX = /(?:\b)([A-Z]{2,})(?:\b)/g;
 function nymid(options) {
   let nymNodes = findNymNodes(options.startingElement);
   let uniqueNyms = uniquePageNyms(nymNodes);
-  let definedAcronyms = defineAcroynms(uniqueNyms, options.definitionList);
+  let definedAcronyms = defineAcronyms(uniqueNyms, options.definitionList);
 
   insertWidget(definedAcronyms, options.widgetPosition);
 }
@@ -56,7 +56,7 @@ function uniquePageNyms(nymNodes) {
 * @param {object} definitionList - JSON object of all known acronyms and definitions
 * @return {object} defined - JSON object of page's acronyms and definitions
 */
-function defineAcroynms(uniqueNyms, definitionList) {
+function defineAcronyms(uniqueNyms, definitionList) {
   let defined = {};
 
   uniqueNyms.map(function(nym) {
